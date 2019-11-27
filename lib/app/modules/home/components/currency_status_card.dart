@@ -1,6 +1,8 @@
 import 'package:currency_tracker/app/shared/theme/styles.dart';
 import 'package:flutter/material.dart';
 
+import '../../../app_bloc.dart';
+import '../../../app_module.dart';
 import '../../../shared/models/Rate.dart';
 
 class CurrencyStatusCard extends StatelessWidget {
@@ -10,6 +12,7 @@ class CurrencyStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _appBloc = AppModule.to.getBloc<AppBloc>();
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
       decoration: BoxDecoration(
@@ -35,12 +38,18 @@ class CurrencyStatusCard extends StatelessWidget {
                   SizedBox(
                     width: 10.0,
                   ),
-                  Text(
-                    "${favorite.value}",
-                    style: TextStyle(
-                      fontSize: 28.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  StreamBuilder(
+                    stream: _appBloc.globalAmountOut,
+                    builder: (BuildContext context, AsyncSnapshot<double> globalAmount) {
+                      return Text(
+                        // "${favorite.value.toStringAsFixed(favorite.value.truncateToDouble() == favorite.value ? 0 : 2)}",
+                        "${(globalAmount.data * favorite.value).toStringAsFixed(favorite.value.truncateToDouble() == favorite.value ? 0 : 2)}",
+                        style: TextStyle(
+                          fontSize: 28.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      );
+                    }
                   ),
                 ],
               ),

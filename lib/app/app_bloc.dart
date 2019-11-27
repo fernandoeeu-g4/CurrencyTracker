@@ -13,8 +13,11 @@ class AppBloc extends BlocBase {
       BehaviorSubject<Currency>();
   BehaviorSubject<List<Rate>> _favoritesCurrenciesController$ =
       BehaviorSubject<List<Rate>>();
+  BehaviorSubject<double> _globalAmount$ = BehaviorSubject<double>.seeded(100.0);
 
   // possibilita o uso externamente também
+  Observable<double> get globalAmountOut => _globalAmount$.stream;
+  Sink<double> get globalAmountIn => _globalAmount$.sink;
   Observable<String> get defaultCurrencyOut =>
       _defaultCurrencyController$.stream;
   Sink<String> get defaultCurrencyIn => _defaultCurrencyController$.sink;
@@ -26,6 +29,7 @@ class AppBloc extends BlocBase {
   Sink<List<Rate>> get favoritesListIn => _favoritesCurrenciesController$.sink;
 
   void setDefaultCurrency(String currency) => defaultCurrencyIn.add(currency);
+  void setGlobalAmount(double newAmount) => globalAmountIn.add(newAmount);
 
   final _currencyRepository = AppModule.to.getDependency<CurrencyRepository>();
 
@@ -53,5 +57,6 @@ class AppBloc extends BlocBase {
     _defaultCurrencyController$.close();
     _currenciesListController$.close();
     _favoritesCurrenciesController$.close();
+    _globalAmount$.close();
   }
 }
