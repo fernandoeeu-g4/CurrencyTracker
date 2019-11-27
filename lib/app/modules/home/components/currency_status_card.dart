@@ -41,14 +41,16 @@ class CurrencyStatusCard extends StatelessWidget {
                   StreamBuilder(
                     stream: _appBloc.globalAmountOut,
                     builder: (BuildContext context, AsyncSnapshot<double> globalAmount) {
-                      return Text(
+                      return globalAmount.hasData ?
+                      Text(
                         // "${favorite.value.toStringAsFixed(favorite.value.truncateToDouble() == favorite.value ? 0 : 2)}",
                         "${(globalAmount.data * favorite.value).toStringAsFixed(favorite.value.truncateToDouble() == favorite.value ? 0 : 2)}",
                         style: TextStyle(
                           fontSize: 28.0,
                           fontWeight: FontWeight.bold,
                         ),
-                      );
+                      ) :
+                      CircularProgressIndicator();
                     }
                   ),
                 ],

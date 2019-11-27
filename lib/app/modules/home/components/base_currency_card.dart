@@ -26,12 +26,16 @@ class BaseCurrencyCard extends StatelessWidget {
                   'BRL',
                   style: TextStyle(fontSize: 50.0, fontWeight: FontWeight.bold),
                 ),
+                TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Enter a search term',
+                  ),
+                  onChanged: (text) {
+                    print("First text field: $text");
+                  },
+                ),
               ],
             ),
-            Icon(
-              Icons.edit,
-              size: 40.0,
-            )
           ],
         )
       ]),
