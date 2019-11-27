@@ -1,3 +1,5 @@
+import 'package:currency_tracker/app/app_bloc.dart';
+import 'package:currency_tracker/app/app_module.dart';
 import 'package:currency_tracker/app/shared/theme/styles.dart';
 import 'package:flutter/material.dart';
 
@@ -26,15 +28,28 @@ class BaseCurrencyCard extends StatelessWidget {
                   'BRL',
                   style: TextStyle(fontSize: 50.0, fontWeight: FontWeight.bold),
                 ),
-                TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Enter a search term',
-                  ),
-                  onChanged: (text) {
-                    print("First text field: $text");
-                  },
-                ),
               ],
+            ),
+            Container(
+              width: 150,
+              child: TextField(
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: '100',
+                ),
+                style: TextStyle(
+                  fontSize: 50.0,
+                  fontWeight: FontWeight.bold
+                ),
+                onChanged: (text) {
+                  if (text.length > 0) {
+                    AppModule.to.getBloc<AppBloc>().globalAmountIn.add(double.parse(text));
+                  } else {
+                    AppModule.to.getBloc<AppBloc>().globalAmountIn.add(100);
+                  }
+                },
+              ),
             ),
           ],
         )

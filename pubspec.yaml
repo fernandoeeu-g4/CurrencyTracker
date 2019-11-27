@@ -20,6 +20,8 @@ dependencies:
   dio: ^3.0.4
   rxdart: ^0.22.6
   bloc_pattern: ^2.5.1
+  flutter_slidable: ^0.5.4
+  reorderables:
   flutter:
     sdk: flutter
 
